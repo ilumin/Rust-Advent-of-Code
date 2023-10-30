@@ -1,3 +1,5 @@
+use std::usize;
+
 #[allow(dead_code)]
 fn load_input(raw: &str) -> Vec<[usize; 3]> {
     let input: Vec<[usize; 3]> = raw
@@ -16,6 +18,18 @@ fn load_input(raw: &str) -> Vec<[usize; 3]> {
     input
 }
 
+fn find_two_smallest_side(sides: [&usize; 3]) -> [&usize; 2] {
+    let mut x = sides;
+    x.sort();
+
+    [x[0], x[1]]
+}
+
+fn find_slack(sides: [&usize; 3]) -> usize {
+    let [s1, s2] = find_two_smallest_side(sides);
+    s1 * s2
+}
+
 // find total square feet
 #[allow(dead_code)]
 pub fn part_one(input: Vec<[usize; 3]>) -> usize {
@@ -23,11 +37,7 @@ pub fn part_one(input: Vec<[usize; 3]>) -> usize {
         .iter()
         .map(|[l, w, h]| {
             let area = 2 * l * w + 2 * w * h + 2 * h * l;
-            let slack = {
-                let mut x = [l, w, h];
-                x.sort();
-                x[0] * x[1]
-            };
+            let slack = find_slack([l, w, h]);
 
             area + slack
         })

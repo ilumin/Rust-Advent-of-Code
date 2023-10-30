@@ -48,12 +48,7 @@ fn find_bow(dimension: &[usize; 3]) -> usize {
 pub fn part_one(input: Vec<[usize; 3]>) -> usize {
     input
         .iter()
-        .map(|dimension| {
-            let area = find_area(dimension);
-            let slack = find_slack(dimension);
-
-            area + slack
-        })
+        .map(|dimension| find_area(dimension) + find_slack(dimension))
         .sum()
 }
 
@@ -61,12 +56,7 @@ pub fn part_one(input: Vec<[usize; 3]>) -> usize {
 pub fn part_two(input: Vec<[usize; 3]>) -> usize {
     input
         .iter()
-        .map(|dimension| {
-            let ribbon = find_ribbon(&dimension);
-            let bow = find_bow(&dimension);
-
-            ribbon + bow
-        })
+        .map(|dimension| find_ribbon(&dimension) + find_bow(&dimension))
         .sum()
 }
 

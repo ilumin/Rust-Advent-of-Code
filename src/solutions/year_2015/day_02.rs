@@ -43,21 +43,23 @@ fn find_bow(dimension: &[usize; 3]) -> usize {
     dimension.iter().product()
 }
 
+fn find_wrapping_paper_size(dimension: &[usize; 3]) -> usize {
+    find_area(dimension) + find_slack(dimension)
+}
+
+fn find_ribbon_size(dimension: &[usize; 3]) -> usize {
+    find_ribbon(dimension) + find_bow(dimension)
+}
+
 // find total square feet
 #[allow(dead_code)]
 pub fn part_one(input: Vec<[usize; 3]>) -> usize {
-    input
-        .iter()
-        .map(|dimension| find_area(dimension) + find_slack(dimension))
-        .sum()
+    input.iter().map(find_wrapping_paper_size).sum()
 }
 
 #[allow(dead_code)]
 pub fn part_two(input: Vec<[usize; 3]>) -> usize {
-    input
-        .iter()
-        .map(|dimension| find_ribbon(&dimension) + find_bow(&dimension))
-        .sum()
+    input.iter().map(find_ribbon_size).sum()
 }
 
 #[cfg(test)]

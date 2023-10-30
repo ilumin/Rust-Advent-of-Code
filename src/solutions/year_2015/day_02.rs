@@ -18,8 +18,7 @@ fn load_input(raw: &str) -> Vec<[usize; 3]> {
     input
 }
 
-fn find_area(dimension: &[usize; 3]) -> usize {
-    let [l, w, h] = dimension;
+fn find_area([l, w, h]: &[usize; 3]) -> usize {
     2 * l * w + 2 * w * h + 2 * h * l
 }
 

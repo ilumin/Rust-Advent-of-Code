@@ -22,20 +22,20 @@ fn find_area([l, w, h]: &[usize; 3]) -> usize {
     2 * l * w + 2 * w * h + 2 * h * l
 }
 
-fn find_two_smallest_side(dimension: &[usize; 3]) -> [usize; 2] {
+fn find_two_smallest_side(dimension: &[usize; 3]) -> (usize, usize) {
     let mut dim = *dimension;
     dim.sort();
 
-    [dim[0], dim[1]]
+    (dim[0], dim[1])
 }
 
 fn find_slack(dimension: &[usize; 3]) -> usize {
-    let [s1, s2] = find_two_smallest_side(dimension);
+    let (s1, s2) = find_two_smallest_side(dimension);
     s1 * s2
 }
 
 fn find_ribbon(dimension: &[usize; 3]) -> usize {
-    let [s1, s2] = find_two_smallest_side(dimension);
+    let (s1, s2) = find_two_smallest_side(dimension);
     2 * (s1 + s2)
 }
 

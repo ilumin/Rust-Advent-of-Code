@@ -16,7 +16,7 @@ pub fn part_one(input: &str) -> usize {
     let mut houses = HashMap::new();
     houses.insert(position, 1);
 
-    input.split("").into_iter().for_each(|direction| {
+    input.split("").enumerate().for_each(|(_, direction)| {
         position = move_position(position, &direction);
         houses.entry(position).and_modify(|e| *e += 1).or_insert(1);
     });

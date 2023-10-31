@@ -10,44 +10,43 @@ fn move_position((x, y): (isize, isize), direction: &str) -> (isize, isize) {
     }
 }
 
-#[allow(dead_code)]
-pub fn part_one(input: &str) -> usize {
+fn delivering(
+    direction: &str,
+    houses: &HashMap<(isize, isize), isize>,
+    predicate: impl FnMut(&(usize, &str)) -> bool,
+) -> HashMap<(isize, isize), isize> {
     let mut position = (0, 0);
-    let mut houses = HashMap::new();
+    let mut houses = houses.clone();
+
     houses.insert(position, 1);
 
-    input.split("").enumerate().for_each(|(_, direction)| {
-        position = move_position(position, &direction);
-        houses.entry(position).and_modify(|e| *e += 1).or_insert(1);
-    });
+    direction
+        .split("")
+        .enumerate()
+        .filter(predicate)
+        .for_each(|(_, d)| {
+            position = move_position(position, d);
+            houses.entry(position).and_modify(|e| *e += 1).or_insert(1);
+        });
+
+    houses
+}
+
+#[allow(dead_code)]
+pub fn part_one(input: &str) -> usize {
+    let mut houses = HashMap::new();
+
+    houses = delivering(input, &houses, |(_, _)| true);
 
     houses.len()
 }
 
 #[allow(dead_code)]
 pub fn part_two(input: &str) -> usize {
-    let mut position = (0, 0);
     let mut houses = HashMap::new();
-    houses.insert(position, 1);
 
-    input
-        .split("")
-        .enumerate()
-        .filter(|(i, _)| i % 2 == 0)
-        .for_each(|(_, direction)| {
-            position = move_position(position, &direction);
-            houses.entry(position).and_modify(|e| *e += 1).or_insert(1);
-        });
-
-    position = (0, 0);
-    input
-        .split("")
-        .enumerate()
-        .filter(|(i, _)| i % 2 != 0)
-        .for_each(|(_, direction)| {
-            position = move_position(position, &direction);
-            houses.entry(position).and_modify(|e| *e += 1).or_insert(1);
-        });
+    houses = delivering(input, &houses, |(i, _)| i % 2 == 0);
+    houses = delivering(input, &houses, |(i, _)| i % 2 != 0);
 
     houses.len()
 }

@@ -44,9 +44,11 @@ pub fn part_one(input: &str) -> usize {
 #[allow(dead_code)]
 pub fn part_two(input: &str) -> usize {
     let mut houses = HashMap::new();
+    let route_for_santa: fn(&(usize, &str)) -> bool = |(i, _)| i % 2 == 0;
+    let route_for_robot: fn(&(usize, &str)) -> bool = |(i, _)| i % 2 != 0;
 
-    houses = delivering(input, &houses, |(i, _)| i % 2 == 0);
-    houses = delivering(input, &houses, |(i, _)| i % 2 != 0);
+    houses = delivering(input, &houses, route_for_santa);
+    houses = delivering(input, &houses, route_for_robot);
 
     houses.len()
 }
